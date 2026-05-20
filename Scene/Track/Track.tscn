@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://061po14iysga"]
+
+[ext_resource type="Texture2D" uid="uid://2msta3ane5h5" path="res://Assets/Images/WaterBg.png" id="1_4m7ci"]
+[ext_resource type="Script" uid="uid://md2h0pmo1rm0" path="res://Scene/Track/Track.gd" id="1_ma7vc"]
+[ext_resource type="Texture2D" uid="uid://c1m5vk3rejca7" path="res://Assets/Images/Monaco.png" id="2_vof1f"]
+[ext_resource type="PackedScene" uid="uid://c4k0syad5euys" path="res://Scene/Car/Car.tscn" id="3_vof1f"]
+
+[sub_resource type="Curve2D" id="Curve2D_ma7vc"]
+_data = {
+"points": PackedVector2Array(-65.282036, 0, 65.282036, 0, 468, 454, -39.94871, 51.641018, 39.94871, -51.641018, 828, 539, -30.205122, 52.615376, 30.205122, -52.615376, 705, 308, -13.641024, 86.71793, 13.641024, -86.71793, 995, 271, 80.87178, -2.9230764, -80.87178, 2.9230764, 714, 71, 68.20512, -15.589741, -68.20512, 15.589741, 495, 257, 69.179474, 0, -69.179474, 0, 334, 111, 22.410252, -65.282036, -22.410252, 65.282036, 123, 290, -44.820503, -54.564095, 44.820503, 54.564095, 122, 472, 0, 0, 0, 0, 468, 454)
+}
+point_count = 10
+
+[node name="Track" type="Node2D" unique_id=563749420]
+script = ExtResource("1_ma7vc")
+
+[node name="background" type="Sprite2D" parent="." unique_id=1160588257]
+position = Vector2(599, 326)
+scale = Vector2(1.0999999, 1.0999999)
+texture = ExtResource("1_4m7ci")
+
+[node name="Track" type="Sprite2D" parent="." unique_id=441550413]
+position = Vector2(556, 325)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("2_vof1f")
+
+[node name="Car" parent="." unique_id=105018633 instance=ExtResource("3_vof1f")]
+position = Vector2(416, 462)
+
+[node name="TrackZone" type="Area2D" parent="." unique_id=872794303]
+collision_layer = 0
+
+[node name="Inner" type="CollisionPolygon2D" parent="TrackZone" unique_id=907754371]
+polygon = PackedVector2Array(323, 181, 229, 248, 167, 364, 181, 417, 455, 394, 744, 475, 665, 414, 638, 340, 652, 279, 692, 240, 766, 228, 910, 251, 861, 212, 704, 140, 551, 307, 494, 334, 424, 319)
+
+[node name="Outer" type="CollisionPolygon2D" parent="TrackZone" unique_id=913750167]
+polygon = PackedVector2Array(479, 182, 480, -30, -34, -24, -28, 674, 1222, 684, 1219, -23, 503, -30, 487, 184, 656, 15, 752, 20, 989, 133, 1052, 211, 1061, 311, 990, 369, 927, 376, 780, 352, 931, 470, 942, 552, 903, 607, 832, 621, 469, 516, 209, 561, 79, 507, 44, 401, 63, 268, 135, 153, 310, 40, 382, 48)
+
+[node name="TrackPath" type="Path2D" parent="." unique_id=1408776395]
+curve = SubResource("Curve2D_ma7vc")
+
+[connection signal="area_entered" from="TrackZone" to="." method="_on_track_zone_area_entered"]
